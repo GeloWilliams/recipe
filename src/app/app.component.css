@@ -1,7 +1,0 @@
-:host ::ng-deep button:not(:first-child) {
-    margin: 0 .5rem;
-}
-:host ::ng-deep .list-group-item, :host ::ng-deep .space {
-    margin-top: 10px;
-    width: 100%;
-}

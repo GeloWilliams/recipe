@@ -1,13 +1,17 @@
 import { Ingredient } from "../shared/ingredient.model";
 
+// A model is simply a collection of data members, no need for an @Decorator
 export class Recipe {
-    name: string;
-    description: string;
-    imagePath: string;
+   public name: string;
+   public description: string;
+   public imagePath: string;
+   public ingredients: Ingredient[];
 
-    constructor(name: string, desc: string, iPath: string, public ingredients: Ingredient[]){
-        this.name = name;
-        this.description = desc;
-        this.imagePath = iPath;
-    }
+   // Constructor
+   constructor(nme: string, desc: string, imgPath: string, ingred: Ingredient[]) {
+      this.name = nme;
+      this.description = desc;
+      this.imagePath = imgPath;
+      this.ingredients = ingred;
+   }
 }

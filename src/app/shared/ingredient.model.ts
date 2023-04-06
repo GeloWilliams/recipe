@@ -1,4 +1,4 @@
 export class Ingredient {
-   
-    constructor(public name: string, public amount: number) {}
+   // shorthand syntax for constructor + public data members
+   constructor(public name: string, public amount: number) {}
 }

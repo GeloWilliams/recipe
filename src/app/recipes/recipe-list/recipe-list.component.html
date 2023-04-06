@@ -1,15 +1,17 @@
 <div class="row">
-    <div class="col-xs-12">
-        <button (click)="onNewPage()" class="btn btn-success">New Recipe</button>
-    </div>
+   <div class="col-xs-12">
+      <button routerLink="new" class="btn btn-success">New Recipe</button>
+   </div>
 </div>
 <hr>
 <div class="row">
-    <div class="col-xs-12">
-        <app-recipe-item 
-            *ngFor="let recipeEl of recipes; let i = index" 
-            [recipe]="recipeEl"
-            [index]="i"
-            ></app-recipe-item> 
-    </div>
+   <div class="col-xs-12">
+      <!-- 1. loop through recipes with ngFor
+           2. Recipe Item Component's individual recipe is bounded to an item in the loop
+           3. be listenable for a signal resulting from a click from within Recipe Item Component
+           4. send that recipe up to the Recipes component -->
+      <app-recipe-item *ngFor="let recipe of recipes; let i = index" 
+      [individualRecipe]="recipe" [recipeIndex]="i"></app-recipe-item>
+   </div>
 </div>
+

@@ -1,8 +1,11 @@
 <div class="row">
-    <div class="col-md-5">
-        <app-recipe-list></app-recipe-list>
-    </div>
-    <div class="col-md-7">
-        <router-outlet></router-outlet>
-    </div>
+   <div class="col-md-5">
+      <!-- recipe data sent from Recipe List Component 
+           -- directly set selected Recipe to the data passed -->
+      <app-recipe-list></app-recipe-list>
+   </div>
+   <div class="col-md-7">
+      <!-- Child routes located in this component: -->
+      <router-outlet></router-outlet>
+   </div>
 </div>

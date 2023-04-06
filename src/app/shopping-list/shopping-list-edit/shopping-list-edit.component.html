@@ -1,37 +1,52 @@
 <div class="row">
-    <div class="col-xs-12">
-      <form (ngSubmit)="onSubmit(f)" #f="ngForm">
-        <div class="row">
-          <div class="col-sm-5 form-group">
-            <label for="name">Name</label>
-            <input
-              type="text"
-              id="name"
-              class="form-control"
-              name="name"
-              ngModel
-              required>
-          </div>
-          <div class="col-sm-2 form-group">
-            <label for="amount">Amount</label>
-            <input
-              type="number"
-              id="amount"
-              class="form-control"
-              name="amount"
-              ngModel
-              required
-              [pattern]="'^[1-9]+[0-9]*$'">
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-xs-12 slEdit">
-            <button class="btn btn-success" type="submit" [disabled]="!f.valid">{{ editMode ? 'Update' : 'Add' }}</button>
-            <button *ngIf="editMode" class="btn btn-danger" type="button" (click)="onDelete()">Delete</button>
-            <button class="btn btn-primary" type="button" (click)="onClear()">Clear</button>
-          </div>
-        </div>
+   <div class="col-xs-12">
+      <!-- Setting local reference #f to keyword 'ngForm' so that Angular generates 
+           the form into an object
+       -- Use (ngSubmit) to trump type="submit" behavior -->
+      <form #f="ngForm" (ngSubmit)="onSubmit(f)">
+         <!-- Name & Amount inputs -->
+         <div class="row">
+            <div class="col-sm-5 form-group">
+               <label for="name">Name</label>
+               <!-- 'name' property generates a property on type NgForm's 'value' property
+                 -- Use keyword 'ngModel' to register this input as a Form Control -->
+               <input 
+                  type="text" 
+                  id="name" 
+                  class="form-control" 
+                  required
+                  name="name" 
+                  ngModel
+               >
+            </div>
+            <div class="col-sm-2 form-group">
+               <label for="amount">Amount</label>
+               <!-- 'name' property generates a property on type NgForm's 'value' property
+                 -- Use keyword 'ngModel' to register this input as a Form Control
+                 -- 'pattern' takes a regex and ensures the user input is in line with it -->
+               <input 
+                  type="number" 
+                  id="amount" 
+                  class="form-control" 
+                  name="amount" 
+                  ngModel
+                  pattern="^[1-9]+[0-9]*$"
+               >
+            </div>
+         </div>
+         <!-- Buttons -->
+         <div class="row">
+            <div class="col-xs-12">
+               <!-- Add button will send the form submission to (ngSubmit) -->
+               <button 
+                  class="btn btn-success" 
+                  type="submit"
+                  [disabled] = "!f.valid"
+               >{{ editMode ? 'Update' : 'Add' }}</button>
+               <button *ngIf="editMode" class="btn btn-danger" type="button" (click)="onDelete(f)">Delete</button>
+               <button class="btn btn-primary" type="button" (click)="onClear()">Clear</button>
+            </div>
+         </div>
       </form>
-    </div>
-  </div>
-  
+   </div>
+</div>

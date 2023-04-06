@@ -1,0 +1,7 @@
+a {
+   cursor: pointer;
+}
+.highlight, li:focus, a:focus {
+   background-color: #cccccc !important;
+   color: #222 !important;
+}
