@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { BehaviorSubject, Subscription, } from 'rxjs';
+
 import { Recipe } from '../recipe.model';
 import { RecipeService } from '../recipe.service';
+import { User } from 'src/app/auth/user.model';
+
 
 @Component({
    selector: 'app-recipe-list',
@@ -11,12 +15,22 @@ export class RecipeListComponent implements OnInit {
    /* Data member: recipes */
    recipes!: Recipe[];
 
-   // inject RecipeService upon component instantiation
-   constructor(private recipeService: RecipeService) { }
+   /* DATA MEMBER: validUser$ BehaviorSubject
+      -- determines whether a valid user is present */
+   private validUser$ = new BehaviorSubject<User | null>(null);
+
+   /* DATA MEMBER: fetchSub
+      -- watches for recipeList changes */
+   private fetchSub!: Subscription;
+
+   /* inject recipeService upon component instantiation */
+   constructor(private recipeService: RecipeService) {}
 
    // sync recipes with 'recipes' data member
    ngOnInit(): void {
-      this.recipes = this.recipeService.getRecipes();
+
+      // use dummy data
+      // this.recipes = this.recipeService.getRecipes();
 
       // listen for any changes to the recipe list
       this.recipeService.recipesChanged$.subscribe(
@@ -26,4 +40,4 @@ export class RecipeListComponent implements OnInit {
       );
    } // end ngOnInit
 
-}
+} // end RecipeListComponent
