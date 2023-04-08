@@ -1,27 +1,39 @@
-# RecipeApp
+# Recipe App
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.0.5.
+A lightweight app that provides examples of how to 
+work with Angular at a practical level. This app heavily incorporates
+the use of Angular Forms, working with APIs, and validation 
+techniques.
 
-## Development server
+# Features
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Users can create recipes by adding a name, image, and description to a 
+recipe that also includes a list of added ingredients. Recipes can be saved 
+to a list that can be stored on a database. 
 
-## Code scaffolding
+The app is divided into three main sections:
+* Recipe Component
+* ShoppingList Component
+* Authorization Component
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+# Getting Started
 
-## Build
+* cd into the recipe folder and install node modules:
+```
+npm install
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+```
+All required dependencies are listed in the package.json file.<br>
+Install Angular-powered Bootstrap:
+```
+ng add @ng-bootstrap/ng-bootstrap
+```
+* Set up your endpoints in<br> 
+* recipe list storage in the 'shared/data-storage.service.ts' 
+file
+* authorization service in the 'auth/auth.service.ts' file
 
-## Running unit tests
+# Reference
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+This app is a variation of the original RecipeApp created by Maximilian 
+Schwarzmuller at https://academind.com/.

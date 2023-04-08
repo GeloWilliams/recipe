@@ -26,7 +26,7 @@ export class DataStorageService {
    public storeRecipes()  {
       const recipes = this.recipeService.getRecipes();
       // You want to always overwrite any data that was previously stored (PUT instead of POST)
-      return this.http.put('https://ng-recipe-book-e9566.firebaseio.com/recipes.json', recipes).subscribe(
+      return this.http.put('storage-endpoint/recipes.json', recipes).subscribe(
          res => { console.log('Firebase\'s response:', res); }
       );
    } // end storeRecipes
@@ -42,7 +42,7 @@ export class DataStorageService {
          // exhaustMap passes the the taken Observable value to the next step
          exhaustMap(user => {
             const userToken = user!.token;
-            return this.http.get<Recipe[]>('https://ng-recipe-book-e9566.firebaseio.com/recipes.json?auth=' + userToken)
+            return this.http.get<Recipe[]>('fetching-endpoint/recipes.json?auth=' + userToken)
          }),
          // rxjs map operator
          map(recipes => {
