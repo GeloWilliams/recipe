@@ -1,24 +1,30 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
+
 import { Ingredient } from '../shared/ingredient.model';
 import { ShoppingListService } from './shopping-list.service';
 
+/* Component Decorator */
 @Component({
    selector: 'app-shopping-list',
    templateUrl: './shopping-list.component.html',
    styleUrls: ['./shopping-list.component.css']
 })
-export class ShoppingListComponent implements OnInit, OnDestroy {
-   /* Data Member: ingredients */
-   ingredients: Ingredient[] = [];
-   /* Data Member (Subscription): listSub */
-   listSub!: Subscription;
 
-   // new Ingredient
+export class ShoppingListComponent implements OnInit, OnDestroy {
+
+   /* DATA MEMBER: ingredients */
+   public ingredients: Ingredient[] = [];
+
+   /* DATA MEMBER: listSub */
+   private listSub!: Subscription;
+
+   /* DATA MEMBER (import): addedIngredient */
    @Input() addedIngredient!: Ingredient;
 
-   // inject ShoppingListService upon new component instantiation
-   constructor(private shoppingListService: ShoppingListService) { }
+   // inject ShoppingListService upon instantiation
+   constructor(
+      private shoppingListService: ShoppingListService) {}
 
    ngOnInit(): void 
    {
@@ -32,17 +38,18 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
             this.ingredients = data;
          }
       );
-   }
+   } // end OnInit
 
-   /* Operation: onEditItem 
+   /* OPERATION: onEditItem 
+      @param index: the index of the target item for edit
       -- sends item's index to service */
    onEditItem(index: number): void {
       this.shoppingListService.startedEditing$.next(index);
-   }
+   } // end onEditItem
 
    ngOnDestroy(): void {
        // unsubscribe when destructor is called
        this.listSub.unsubscribe();
-   }
+   } // end OnDestroy
 
 } // end ShoppingListComponent

@@ -1,8 +1,10 @@
 import { Directive, ElementRef, HostBinding, HostListener } from '@angular/core';
 
+/* Directive Decorator */
 @Directive({
    selector: '[appDropdown]'
 })
+
 export class DropdownDirective {
 
    // 'class' is an array on our target element

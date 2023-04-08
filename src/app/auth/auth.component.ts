@@ -12,28 +12,25 @@ import { Router } from "@angular/router";
 
 export class AuthComponent {
 
+   // inject AuthService & Router upon instantiation
+   constructor(
+      private authService: AuthService,
+      private router: Router) {}
+
    /* DATA MEMBERS: isLoginMode, isLoading, errorMsg */
    public isLoginMode = true;
    public isLoading = false;
    public errorMsg: string | null = null;
 
-   // inject Authservice & Router upon instantiation
-   constructor(
-      private authService: AuthService,
-      private router: Router
-      ) {}
-
    /* OPERATION: onSwitchMode
-         -- toggles isLoginMode property
-   */
+         -- toggles isLoginMode property */
    public onSwitchMode(): void {
       this.isLoginMode = !this.isLoginMode;
-   }
+   } // end onSwitchMode
 
    /* OPERATION: onSubmit:
          @param form: the NgForm imported from the template
-         -- configures the functionality for type='submit'
-   */
+         -- configures the functionality for type='submit' */
    public onSubmit(form: NgForm): void {
       // for devs who manually hack the disable button validation via dev tools (in the template):
       if (!form.valid) return;

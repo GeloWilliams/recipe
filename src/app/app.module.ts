@@ -23,8 +23,9 @@ import { AuthComponent } from './auth/auth.component';
 import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinner.component';
 import { AuthInterceptorService } from './auth/auth-interceptor.service';
 
-
+/* Module Decorator */
 @NgModule({
+  // declarations: components, directives, and pipes
   declarations: [
     AppComponent,
     ShoppingListComponent,
@@ -40,6 +41,7 @@ import { AuthInterceptorService } from './auth/auth-interceptor.service';
     AuthComponent,
     LoadingSpinnerComponent
   ],
+  // imports: other modules
   imports: [
     BrowserModule,
     FormsModule,
@@ -48,14 +50,13 @@ import { AuthInterceptorService } from './auth/auth-interceptor.service';
     NgbModule,
     AppRoutingModule,
   ],
-  /*
-    add 'RecipeService' here so that it does not
-    get destroyed every time you navigate away from
-    a single component (ie RecipesList page)
-  */
+  // providers: services
    providers: [ShoppingListService,
                RecipeService,
-               {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true}],
-   bootstrap: [AppComponent]
+               {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true}
+  ],
+  // bootstrap: start from...
+   bootstrap: [AppComponent] 
 })
+
 export class AppModule {}

@@ -1,5 +1,6 @@
 import { Component } from "@angular/core";
 
+/* Component Decorator */
 @Component({
     selector: 'app-loading-spinner',
     template: '<div class="lds-hourglass"><div></div><div></div><div></div><div></div></div>',

@@ -1,20 +1,25 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
 
 import { DataStorageService } from '../shared/data-storage.service';
 import { AuthService } from '../auth/auth.service';
-import { Subscription } from 'rxjs';
 
+
+/* Component Decorator */
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
+
 export class HeaderComponent implements OnInit, OnDestroy {
 
-   /* Inject dataStorargeService and authService upon instantiation */
+   /* Inject DataStorargeService, AuthService, Router upon instantiation */
    constructor(
       private dataStorageService: DataStorageService,
-      private authService: AuthService) {}
+      private authService: AuthService,
+      private router: Router) {}
 
    /* DATA MEMBER: userSubscription 
       -- keeps track of which users (if any) are being next-ed */
@@ -28,18 +33,28 @@ export class HeaderComponent implements OnInit, OnDestroy {
       this.userSubscription = this.authService.user$.subscribe(user => {
          this.validUser = !!user; // shortcut to ternary '!user ? false : true'
       });
-   } // end ngOnInit
+   } // end OnInit
 
-   onSaveData(): void {
+   /* OPERATION: onSaveData
+      -- reaches out to DataStorageService to store recipes in the database */
+   public onSaveData(): void {
       this.dataStorageService.storeRecipes();
-   }
+   } // end onSaveData
 
-   onFetchData(): void {
+   /* OPERATION: onFetchData
+      -- reaches out to DataStorageService to fetch recipes in the database */
+   public onFetchData(): void {
       this.dataStorageService.fetchRecipes().subscribe();
-   }
+   } // end onFetchData
+
+   /* OPERATION: onLogout
+      -- calls logout from the AuthService*/
+   public onLogout(): void {
+      this.authService.logout();
+   } // end onLogout
 
    ngOnDestroy(): void {
       this.userSubscription.unsubscribe();
-   }
+   } // end OnDestroy
 
-}
+} // end HeaderComponent

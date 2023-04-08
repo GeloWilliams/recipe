@@ -1,20 +1,23 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+
 import { ShoppingListService } from 'src/app/shopping-list/shopping-list.service';
 import { Recipe } from '../recipe.model';
 import { RecipeService } from '../recipe.service';
 
+/* Component Decorator */
 @Component({
   selector: 'app-recipe-detail',
   templateUrl: './recipe-detail.component.html',
   styleUrls: ['./recipe-detail.component.css']
 })
-export class RecipeDetailComponent implements OnInit {
-   /* Data Member: receivedRecipe */
-   receivedRecipe!: Recipe;
-   recipeId!: number;
 
-   // inject ShoppingListService upon new component instantiation
+export class RecipeDetailComponent implements OnInit {
+   /* DATA MEMBER: receivedRecipe */
+   public receivedRecipe!: Recipe;
+   private recipeId!: number;
+
+   // inject ShoppingListService, Router, ActivatedRoute, RecipeService upon instantiation
    constructor(private slService: ShoppingListService, 
          private router: Router, 
          private route: ActivatedRoute, 
@@ -28,7 +31,7 @@ export class RecipeDetailComponent implements OnInit {
             this.recipeId = +params['id'];
          }
       );
-   } // end ngOnInit
+   } // end OnInit
 
    /* Operation: onDeleteRecipe
       -- deletes a recipe
@@ -48,10 +51,11 @@ export class RecipeDetailComponent implements OnInit {
    /* Operation: addToShoppingList 
       -- adds ingredients from receivedRecipe to ShoppingListService
       -- navigates to the ShoppingList landing */
-   addToShoppingList() {
+   public addToShoppingList() {
       for (let ingredient of this.receivedRecipe.ingredients) {
         this.slService.addIngredient(ingredient);
         this.router.navigate(['/shopping-list']);
       } // end for
    } // end addToShoppingList
-}
+   
+} // end RecipeDetailComponent

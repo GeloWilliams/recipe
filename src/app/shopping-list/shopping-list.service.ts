@@ -1,66 +1,72 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
+
 import { Ingredient } from '../shared/ingredient.model';
 
-// Optional decorator, for convention's sake
+/* Service Decorator */
 @Injectable() 
 
-/**  -----------------------------------------------------------------
-   Shopping List Service
-   -- houses shopping list data
-   -- maintains centralised operations related to shopping 
-      list interactions */
 export class ShoppingListService {
-   /* Data Member: ingredients */
+   /* DATA MEMBER: ingredients */
    private ingredients: Ingredient[] = [
       new Ingredient("Apples", 44),
       new Ingredient("Tomatoes", 2)
    ];
 
-   /* Data Member: ingredientsUpdate Subject
+   /* DATA MEMBER: ingredientsUpdate Subject
       -- a copy of the entire updated array will emit to all observers */
    public ingredientsUpdate$ = new Subject<Ingredient[]>();
 
-   /* Data Member: startedEditing Subject 
+   /* DATA MEMBER: startedEditing Subject 
       -- the index of the edited ingredient will 
          be broadcasted to all observers */
    public startedEditing$ = new Subject<number>();
 
-   /* Operation: getIngredients
+   /* OPERATION: getIngredients
       -- ingredients getter method
       -- protects 'ingredients' by returning an exact copy via slice()
       @return: returns a copy of the 'ingredients' data member */
    public getIngredients(): Ingredient[] {
       return this.ingredients.slice();
-   }
+   } // end getIngredients
 
-   /* Operation: addIngredient
+   /* OPERATION: addIngredient
+      @param data: the ingredient object to be added to the
+         current ingredients array          
       -- adds an ingredient 
-      -- emits the entire update array */
+      -- emits the entire updated array */
    public addIngredient(data: Ingredient): void {
       this.ingredients.push(data);
       this.ingredientsUpdate$.next(this.ingredients.slice());
-   }
+   } // end addIngredient
 
-   /* Operation: getIngredient
-      -- returns an ingredient at a specific index
-      @return: ingredient with the index of the argument value */
+   /* OPERATION: getIngredient
+      @param index: the index for the target ingredient
+                    within the ingredients array
+      @return:      ingredient with the index of the argument value
+      -- returns an ingredient at a specific index */
    public getIngredient(index: number): Ingredient {
       return this.ingredients[index];
-   }
+   } // end getIngredient
 
-   /* Operation: getIngredient
+   /* OPERATION: getIngredient
+      @param index:         the index for the target ingredient
+                            within the ingredients array
+      @param newIngredient: ingredient object to replace current
       -- updates ingredient at specified index with the new
          ingredient passed */
    public updateIngredient(index: number, newIngredient: Ingredient): void {
       this.ingredients[index] = newIngredient;
       this.ingredientsUpdate$.next(this.ingredients.slice());
-   }
+   } // end updateIngredient
 
-   /* Operation: deleteIngredient
-   -- deletes ingredient at specified index */
+   /* OPERATION: deleteIngredient
+      @param index: the index for the target ingredient 
+         within the ingredients array
+      -- deletes ingredient at specified index */
       public deleteIngredient(index: number): void {
          this.ingredients.splice(index, 1);
          this.ingredientsUpdate$.next(this.ingredients.slice());
-      }
-}
+      } // end deleteIngredient
+
+} // end ShoppingListService

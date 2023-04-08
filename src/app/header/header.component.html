@@ -10,11 +10,11 @@
                Note: we could use [routerLink] array syntax for dynamic links,
                however we only need to route to either '/recipes' or '/shopping-list' -->
             <li><a routerLinkActive="highlight" routerLink="/recipes" *ngIf="validUser">Recipes</a></li>
-            <li><a routerLinkActive="highlight" routerLink="/auth"  *ngIf="!validUser">Authenticate</a></li>
-            <li><a routerLinkActive="highlight" routerLink="/shopping-list">Shopping List</a></li>
+            <li><a routerLinkActive="highlight" routerLink="/auth"  *ngIf="!validUser">Login</a></li>
+            <li><a routerLinkActive="highlight" routerLink="/shopping-list" *ngIf="validUser">Shopping List</a></li>
          </ul>
          <ul class="nav navbar-nav navbar-right">
-            <li><a style="cursor: pointer"  *ngIf="validUser">Logout</a></li>
+            <li><a style="cursor: pointer" (click)="onLogout()" *ngIf="validUser">Logout</a></li>
             <!-- using directive: appDropdown -->
             <li class="dropdown" appDropdown>
                <a class="dropdown-toggle" role="button" *ngIf="validUser">Manage <span class="caret"></span></a>

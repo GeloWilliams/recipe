@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core'
 import { RouterModule, Routes } from '@angular/router'
-import { AuthComponent } from './auth/auth.component';
 
+import { AuthComponent } from './auth/auth.component';
 import { RecipeDetailComponent } from './recipes/recipe-detail/recipe-detail.component';
 import { RecipeEditComponent } from './recipes/recipe-edit/recipe-edit.component';
 import { RecipesResolverService } from './recipes/recipes-resolver.service';
@@ -22,6 +22,7 @@ const appRoutes: Routes = [
    { path: 'auth', component: AuthComponent }
 ];
 
+/* Module Decorator */
 @NgModule({
    imports: [RouterModule.forRoot(appRoutes)], // import created routes into module
    exports: [RouterModule]                     // export module under this config

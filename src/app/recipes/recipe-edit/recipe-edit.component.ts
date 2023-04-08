@@ -1,27 +1,30 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+
 import { RecipeService } from '../recipe.service';
 
+/* Component Decorator */
 @Component({
    selector: 'app-recipe-edit',
    templateUrl: './recipe-edit.component.html',
    styleUrls: ['./recipe-edit.component.css']
 })
+
 export class RecipeEditComponent implements OnInit {
 
-   /* Data Member: recipeForm */
+   /* DATA MEMBER: recipeForm */
       public recipeForm!: FormGroup;
 
-   /* Data member: editMode
+   /* DATA MEMBER: editMode
       -- determines whether to populate data */
    private editMode: boolean = false;
 
-   /* Data member: id
+   /* DATA MEMBER: id
       -- retrieves the id of the recipe on the current route */
    private id!: number;
 
-   // inject ActivatedRoute & RecipeService into this component upon instantiation
+   // inject ActivatedRoute & RecipeService upon instantiation
    constructor(private curRoute: ActivatedRoute, 
          private recipeService: RecipeService,
          private router: Router
@@ -39,10 +42,12 @@ export class RecipeEditComponent implements OnInit {
             this.initForm();
          }
       );
-   } // end ngOnInit
+   } // end OnInit
 
-   /* Operation: getIngredientControls */
-   public getIngredientControls(): any {
+   /* Operation: getIngredientControls
+      -- @return: AbstractControl array, representing individual
+         form controls in a FormArray */
+   public getIngredientControls(): AbstractControl[] {
       return (<FormArray>this.recipeForm.get('ingredients')).controls;
    } // end getIngredientControls
 
@@ -63,6 +68,8 @@ export class RecipeEditComponent implements OnInit {
    } // end onAddIngredient
 
    /* Operation: onDeleteIngredient
+      @param index: the index corresponding an item 
+         in the ingredients array
       -- removes the form control at the index passed */
    public onDeleteIngredient(index: number): void {
       (<FormArray>this.recipeForm.get('ingredients')).removeAt(index);
@@ -75,15 +82,13 @@ export class RecipeEditComponent implements OnInit {
    } // end onClearAll
 
    /* Operation: onCancel
-      -- navigates back on level from the current route
-   */
+      -- navigates back on level from the current route */
    public onCancel(): void {
       this.router.navigate(['../'],{relativeTo: this.curRoute});
    } // end onCancel
 
    /* Operation: onAddOrUpdateRecipe
-      -- adds or updates a recipe
-   */
+      -- adds or updates a recipe */
    public onAddOrUpdateRecipe(): void {
       /* a shortcut in transferring a new recipe is to pass 
          'this.recipeForm.value' as an argument. Since we set up 
@@ -150,4 +155,5 @@ export class RecipeEditComponent implements OnInit {
          'ingredients': new FormArray(recipeIngredients)
       });
    } // end initForm
-}
+
+} // end RecipeEditComponent

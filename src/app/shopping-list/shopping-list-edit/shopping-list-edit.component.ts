@@ -5,6 +5,7 @@ import { Subscription } from "rxjs";
 import { Ingredient } from "src/app/shared/ingredient.model";
 import { ShoppingListService } from "../shopping-list.service";
 
+/* Component Decorator */
 @Component({
    selector: 'app-shopping-list-edit',
    templateUrl: './shopping-list-edit.component.html',
@@ -13,24 +14,24 @@ import { ShoppingListService } from "../shopping-list.service";
 
 export class ShoppingListEditComponent implements OnInit, OnDestroy {
 
-   // inject ShoppingListService upon new component instantiation
+   // inject ShoppingListService upon instantiation
    constructor(private slService: ShoppingListService) {}
 
-   /* Data Member: slForm
+   /* DATA MEMBER (import): slForm
       -- Access to shopping list form via ViewChild */
    @ViewChild('f', {static: false}) slForm!: NgForm;
 
-   /* Data Member: editMode
+   /* DATA MEMBER: editMode
      -- indicates whether in edit mode */
    public editMode = false;
 
-   /* Data Member: editedItem */
+   /* DATA MEMBER: editedItem */
    private editedItem!: Ingredient;
 
-   /* Data Member: editedItemIndex */
+   /* DATA MEMBER: editedItemIndex */
    public editedItemIndex!: number;
 
-   /* Data Member: editWatcher
+   /* DATA MEMBER: editWatcher
       -- subscribed to startedEditing Subject in slService */
    private editWatcher!: Subscription;
    
@@ -48,9 +49,10 @@ export class ShoppingListEditComponent implements OnInit, OnDestroy {
             });
          }
       );
-   }
+   } // end OnInit
    
-   /* Operation: onSubmit 
+   /* OPERATION: onSubmit 
+      @param f: the NgForm passed from template
       -- adds a new ingredient or updates an existing ingredient */
    public onSubmit(f: NgForm): void {
       // ngForm type has a 'value' property
@@ -68,22 +70,25 @@ export class ShoppingListEditComponent implements OnInit, OnDestroy {
       }
       this.editMode = false;
       f.reset();
-   }
 
-   /* Operation: onClear */
+   } // end onSubmit
+
+   /* OPERATION: onClear */
    public onClear(): void {
       this.slForm.reset();
       this.editMode = false;
-   }
+   } // end onClear
 
-   /* Operation: onDelete
+   /* OPERATION: onDelete
+      @param f: the NgForm passed from template
       -- clears form and splices out ingredient at specified index */
    public onDelete(f:NgForm): void {
       this.onClear();
       this.slService.deleteIngredient(this.editedItemIndex);
-   }
+   } // end onDelete
    
    ngOnDestroy(): void {
       this.editWatcher.unsubscribe();
-   }
-}
+   } // end OnDestroy
+
+} // end ShoppingListEditComponent

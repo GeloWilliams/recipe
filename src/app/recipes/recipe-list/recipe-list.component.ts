@@ -1,29 +1,20 @@
 import { Component, OnInit } from '@angular/core';
-import { BehaviorSubject, Subscription, } from 'rxjs';
 
 import { Recipe } from '../recipe.model';
 import { RecipeService } from '../recipe.service';
-import { User } from 'src/app/auth/user.model';
 
-
+/* Component Decorator */
 @Component({
    selector: 'app-recipe-list',
    templateUrl: './recipe-list.component.html',
    styleUrls: ['./recipe-list.component.css']
 })
+
 export class RecipeListComponent implements OnInit {
    /* Data member: recipes */
-   recipes!: Recipe[];
+   public recipes!: Recipe[];
 
-   /* DATA MEMBER: validUser$ BehaviorSubject
-      -- determines whether a valid user is present */
-   private validUser$ = new BehaviorSubject<User | null>(null);
-
-   /* DATA MEMBER: fetchSub
-      -- watches for recipeList changes */
-   private fetchSub!: Subscription;
-
-   /* inject recipeService upon component instantiation */
+   /* inject RecipeService upon component instantiation */
    constructor(private recipeService: RecipeService) {}
 
    // sync recipes with 'recipes' data member
@@ -38,6 +29,6 @@ export class RecipeListComponent implements OnInit {
             this.recipes = recipes;
          }
       );
-   } // end ngOnInit
+   } // end OnInit
 
 } // end RecipeListComponent

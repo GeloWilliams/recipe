@@ -1,16 +1,17 @@
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { BehaviorSubject, Observable, catchError, tap, throwError } from "rxjs";
+import { Router } from "@angular/router";
 
 import { User } from "./user.model";
+
 
 /* INTERFACE: AuthResponseData
    - based on the response payload outlined in the Firebase REST API docs 
    - optionally created as good practice that defines the data we are working with
    - allows us to explicitly define what we are expecting back from the request
    - export keyword allows this interface to be public or open for use in 
-     other components(must be imported separately from or alongside AuthService)
-*/
+     other components(must be imported separately from or alongside AuthService) */
 export interface AuthResponseData {
    kind: string, 
    idToken: string,
@@ -26,8 +27,10 @@ export interface AuthResponseData {
 
 export class AuthService {
 
-   // inject the HttpClient service upon instantiation
-   constructor(private http: HttpClient) {}
+   // inject the HttpClient service, Router upon instantiation
+   constructor(
+      private http: HttpClient,
+      private router: Router) {}
 
    /* DATA MEMBER: user$ Behavior Subject
      -- nexts a new User when login runs
@@ -45,8 +48,7 @@ export class AuthService {
          @param pwd: the password to be checked
          @return:    an Observable in the form of AuthResponseData
          -- Hits the Firebase DB endpoint for email creation
-         -- If credentials are invalid, an error message is displayed
-   */
+         -- If credentials are invalid, an error message is displayed */
    public signup(eml: string, pwd: string): Observable<AuthResponseData> {
       return this.http.post<AuthResponseData>('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyDTok9vx6CfjkEpohP8AzWFVpJtW--xZi4', 
       {
@@ -70,8 +72,7 @@ export class AuthService {
       @param pwd: the password to be checked
       @return:    an Observable in the form of AuthResponseData
       -- Hits the Firebase DB endpoint for email authorization
-      -- If credentials are invalid, an error message is displayed
-   */
+      -- If credentials are invalid, an error message is displayed */
    public login(eml: string, pwd: string): Observable<AuthResponseData> {
       return this.http.post<AuthResponseData>('https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyDTok9vx6CfjkEpohP8AzWFVpJtW--xZi4',
       {
@@ -84,20 +85,24 @@ export class AuthService {
             // create user from response data
             const user = this.handleLogin(res);
 
-            console.log("res: ", res)
-            console.log("user: ", user)
-
             // lock in the current user:
             this.user$.next(user);
          })
       );
    } // end login
 
+   /* OPERATION: logout
+      -- treats the user as unauthenticated
+      -- redirects the user to the Auth screen */
+   public logout(): void {
+      this.user$.next(null);
+      this.router.navigate(['/auth']);
+   } // end logout
+
    /* OPERATION: handleError
       @param errorRes: the response error, can be implicitly passed via rxjs's catchError
       -- central place for handling errors
-      -- returns 'Observable<never>' since this Observer only emits an error
-   */
+      -- returns 'Observable<never>' since this Observer only emits an error */
    private handleError(errorRes: HttpErrorResponse): Observable<never> {
       let errorMsg = 'Man... some error happened!';
 
@@ -125,8 +130,7 @@ export class AuthService {
       @param res: the response body from Firebase endpoints
       @return:    a new User object
       -- shapes and then returns a new user from the data received from 
-         Firebase endpoints
-   */
+         Firebase endpoints */
   public handleLogin(res: AuthResponseData): User {
       const curTime = new Date().getTime(); // get current time in milliseconds
       // res.expiresIn is a string representing the number of seconds until expiration
