@@ -18,17 +18,16 @@ The app is divided into three main sections:
 
 # Getting Started
 
-* cd into the recipe folder and install node modules:
+cd into the recipe folder and install node modules:
 ```
 npm install
-
 ```
-All required dependencies are listed in the package.json file.<br>
+All required dependencies are listed in the package.json file.<br><br>
 Install Angular-powered Bootstrap:
 ```
 ng add @ng-bootstrap/ng-bootstrap
 ```
-* Set up your endpoints in<br> 
+Set up your endpoints in: <br> 
 * recipe list storage in the 'shared/data-storage.service.ts' 
 file
 * authorization service in the 'auth/auth.service.ts' file
@@ -36,4 +35,4 @@ file
 # Reference
 
 This app is a variation of the original RecipeApp created by Maximilian 
-Schwarzmuller at https://academind.com/.
+Schwarzmuller.
