@@ -7,8 +7,8 @@ export class User {
    constructor(
       public email: string, 
       public id: string, 
-      private _token: string, 
-      private _tokenExpirationDate: Date
+      public _token: string, 
+      public _tokenExpirationDate: Date
    ) {} // create new Users on the fly
 
    /* GETTER: token */
