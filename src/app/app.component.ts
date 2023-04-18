@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { AuthService } from './auth/auth.service';
 
 /* Component Decorator */
 @Component({
@@ -7,4 +8,13 @@ import { Component } from '@angular/core';
    styleUrls: ['./app.component.css']
 })
 
-export class AppComponent {}
+export class AppComponent implements OnInit {
+
+   constructor(private authService: AuthService) {}
+
+   ngOnInit(): void {
+      // runs early in the app to check browser local storage
+      this.authService.autoLogin();
+   }
+
+}
