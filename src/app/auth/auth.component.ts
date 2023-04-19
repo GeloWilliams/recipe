@@ -65,4 +65,8 @@ export class AuthComponent {
       form.reset();
    } // end onSubmit
 
+   public resetErrorMsg(): void {
+      this.errorMsg = null;
+   }
+
 } // end AuthComponent

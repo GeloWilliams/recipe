@@ -52,7 +52,7 @@ export class AuthService {
          -- Hits the Firebase DB endpoint for email creation
          -- If credentials are invalid, an error message is displayed */
    public signup(eml: string, pwd: string): Observable<AuthResponseData> {
-      return this.http.post<AuthResponseData>('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyDTok9vx6CfjkEpohP8AzWFVpJtW--xZi4', 
+      return this.http.post<AuthResponseData>('signup-endpoint', 
       {
          email: eml,
          password: pwd,
@@ -76,7 +76,7 @@ export class AuthService {
       -- Hits the Firebase DB endpoint for email authorization
       -- If credentials are invalid, an error message is displayed */
    public login(eml: string, pwd: string): Observable<AuthResponseData> {
-      return this.http.post<AuthResponseData>('https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyDTok9vx6CfjkEpohP8AzWFVpJtW--xZi4',
+      return this.http.post<AuthResponseData>('sign-in-endpoint',
       {
          email: eml,
          password: pwd,
